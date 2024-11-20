@@ -45,4 +45,4 @@ end
 
 gem "rails-controller-testing", "~> 1.0"
 
-gem "mutex_m", "~> 0.2.0"
+gem "mutex_m", "~> 0.3.0"
