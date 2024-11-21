@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constant.js";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
@@ -30,8 +30,9 @@ function PostsList() {
 
   function formatDate(date) {
     date = new Date(date);
-      return date.toLocaleString();
+    return date.toLocaleString();
   }
+
   return (
     <div>
       {posts.map((post) => {
