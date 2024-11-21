@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { API_URL } from "../../constant.js";
 import { useEffect, useState } from "react";
 
@@ -25,6 +25,7 @@ function PostDetails() {
     };
     fetchCurrentPost();
   }, [id]);
+
   if (loading) {
     return <div>Loading...</div>;
   } else {
@@ -32,7 +33,10 @@ function PostDetails() {
       <div>
         {"ID: " + post.id}
         <br />
-        {post.title + " " + post.body}
+        <h2>{post.title}</h2>
+        <h3>{post.body}</h3>
+        <Link to={`/posts/${post.id - 1}`}>Previous Post</Link>
+        <div>Current ID: {id}</div>
       </div>
     );
   }
