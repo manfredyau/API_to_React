@@ -39,7 +39,7 @@ function PostsList() {
           <div key={post.id} className="post-container">
             <h2>{post.title}</h2>
             <p>{post.body}</p>
-            <Link to={`/posts/${post.id}`}>Read more ({post.id})</Link>
+            <Link to={`/posts/${post.id}`}>Read in detail ({post.id})</Link>
             <p>Published at: {formatDate(post.created_at)}</p>
           </div>
         );
