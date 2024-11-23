@@ -33,15 +33,37 @@ function PostsList() {
     return date.toLocaleString();
   }
 
+  const deletePost = async (id) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setPosts(posts.filter((post) => post.id !== id));
+      } else {
+        throw response;
+      }
+    } catch (e) {
+      console.log("An error occurred while deleting post: ", e);
+    }
+  };
+
   return (
     <div>
       {posts.map((post) => {
         return (
           <div key={post.id} className="post-container">
-            <h2>{post.title}</h2>
-            <p>{post.body}</p>
-            <Link to={`/posts/${post.id}`}>Read in detail ({post.id})</Link>
+            <h2>
+              <Link to={`/posts/${post.id}`}>{post.title}</Link>
+            </h2>
             <p>Published at: {formatDate(post.created_at)}</p>
+            <div>
+              <button onClick={() => deletePost(post.id)}>Delete</button>
+            </div>
           </div>
         );
       })}
