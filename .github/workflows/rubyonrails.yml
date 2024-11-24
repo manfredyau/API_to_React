@@ -20,6 +20,15 @@ jobs:
           ruby-version: '3.2.1' # Not needed with a .ruby-version file
       - run: bundle install
       - run: bundle exec rake
+    services:
+      postgres:
+        image: postgres:11-alpine
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: FSqwk123
   lint:
     runs-on: ubuntu-latest
     steps:
