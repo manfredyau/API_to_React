@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  fetchAllPosts,
-  deletePost as deletePostService,
-} from "../../services/postService.js";
+import { fetchAllPosts, deletePost } from "../../services/postService.js";
 import { Link } from "react-router-dom";
 
 function PostsList() {
@@ -30,9 +27,9 @@ function PostsList() {
     return date.toLocaleString();
   }
 
-  const deletePost = async (id) => {
+  const deletePostHandler = async (id) => {
     try {
-      await deletePostService(id);
+      await deletePost(id);
       setPosts(posts.filter((post) => post.id !== id));
     } catch (e) {
       console.log("An error occurred while deleting post: ", e);
@@ -49,7 +46,7 @@ function PostsList() {
             </h2>
             <p>Published at: {formatDate(post.created_at)}</p>
             <div>
-              <button onClick={() => deletePost(post.id)}>Delete</button>
+              <button onClick={() => deletePostHandler(post.id)}>Delete</button>
             </div>
           </div>
         );
