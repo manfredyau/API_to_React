@@ -1,6 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deletePost, fetchPost } from "../../services/postService.js";
-import { API_URL } from "../../constant.js";
 import { useEffect, useState } from "react";
 
 function PostDetails() {
