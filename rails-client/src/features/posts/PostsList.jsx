@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { fetchAllPosts, deletePost } from "../../services/postService.js";
-import { Link } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {fetchAllPosts, deletePost} from "../../services/postService.js";
+import {Link} from "react-router-dom";
 
 function PostsList() {
   const [posts, setPosts] = useState([]);
@@ -14,6 +14,7 @@ function PostsList() {
         setPosts(data);
       } catch (e) {
         setError(e);
+        console.error("Failed to fetch posts", e)
       } finally {
         setLoading(false);
       }
@@ -32,7 +33,7 @@ function PostsList() {
       await deletePost(id);
       setPosts(posts.filter((post) => post.id !== id));
     } catch (e) {
-      console.log("An error occurred while deleting post: ", e);
+      console.error("An error occurred while deleting post: ", e);
     }
   };
 
