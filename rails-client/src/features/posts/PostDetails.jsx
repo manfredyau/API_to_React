@@ -1,11 +1,11 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {deletePost, fetchPost} from "../../services/postService.js";
-import {useEffect, useState} from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deletePost, fetchPost } from "../../services/postService.js";
+import { useEffect, useState } from "react";
 
 function PostDetails() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const {id} = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function PostDetails() {
       await deletePost(id);
       navigate("/");
     } catch (e) {
-      console.error("Error deleting post: ",e);
+      console.error("Error deleting post: ", e);
     }
   }
 
@@ -37,7 +37,7 @@ function PostDetails() {
     return (
       <div>
         {"ID: " + post.id}
-        <br/>
+        <br />
         <h2>{post.title}</h2>
         <h3>{post.body}</h3>
         <Link to={`/posts/${post.id - 1}`}>Previous Post</Link>

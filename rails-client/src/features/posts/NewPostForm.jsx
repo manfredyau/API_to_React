@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../../constant.js";
 import { createPost } from "../../services/postService.js";
 
 export default function NewPostForm() {
@@ -21,7 +20,7 @@ export default function NewPostForm() {
       const json = await createPost(formData);
       navigate(`/posts/${json.id}`);
     } catch (e) {
-      console.error(e);
+      console.error("Failed to create post: ",e);
     }
   };
 
