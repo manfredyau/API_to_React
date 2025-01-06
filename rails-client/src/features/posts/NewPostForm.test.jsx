@@ -100,6 +100,5 @@ describe("NewPostForm", () => {
         error
       );
     });
-    expect("a").toEqual(expect.stringMatching(/a/));
   });
 });

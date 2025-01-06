@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../constant.js";
-import { updatePost } from "../../services/postService.js";
+import { fetchPost, updatePost } from "../../services/postService.js";
 
 function EditPostForm() {
   const [post, setPost] = useState(null);
@@ -12,16 +11,11 @@ function EditPostForm() {
 
   useEffect(() => {
     const currentPost = async () => {
-      const response = await fetch(`${API_URL}/${id}`);
       try {
-        if (response.ok) {
-          const data = await response.json();
-          setPost(data);
-        } else {
-          throw response;
-        }
+        const response = await fetchPost(id);
+        setPost(response);
       } catch (error) {
-        console.log("An error occurred:", error);
+        console.error("An error occurred: ", error);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -40,10 +34,10 @@ function EditPostForm() {
     };
 
     try {
-      const response = await updatePost(id, postData);
-      navigate(`/posts/${response.id}`);
+      await updatePost(id, postData);
+      navigate(`/posts/${id}`);
     } catch (error) {
-      console.log("An error occurred:", error);
+      console.error("An error occurred: ", error);
       setError(error.message);
     } finally {
       setLoading(false);
