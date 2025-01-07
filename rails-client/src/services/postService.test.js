@@ -125,4 +125,9 @@ describe("Post API service", () => {
     fetch.mockResponse(null, { status: 500 });
     await expect(deletePost(postId)).rejects.toThrow();
   });
+
+  // Delete throws an error if the response is not OK and the status is not 204
+  it("throws an error when the deletePost response is not ok and the status is not 204", async () => {
+
+  });
 });
