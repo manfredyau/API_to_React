@@ -15,13 +15,12 @@ async function deletePost(id) {
       "Content-Type": "application/json",
     },
   });
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
+
   if (response.status === 204) {
     return null;
+  } else {
+    throw new Error(response.statusText);
   }
-  return response.json();
 }
 
 async function fetchPost(id) {
