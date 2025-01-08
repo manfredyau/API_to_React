@@ -25,7 +25,9 @@ describe("NewPostForm", () => {
     );
     const titleInput = screen.getByLabelText("Title:");
     const bodyInput = screen.getByLabelText("Body:");
-    const submitButton = screen.getByRole("button", "Create a new post");
+    const submitButton = screen.getByRole("button", {
+      name: /Create/i,
+    });
     const expectedTitle = "My New Post";
     const expectedBody = "This is the body of my new post.";
 
@@ -38,7 +40,7 @@ describe("NewPostForm", () => {
   });
 
   it("calls createPost when form is submitted", async () => {
-    const { container } = render(
+    render(
       <Router initialEntries={["/new"]}>
         <Routes>
           <Route path="/" element={<div>Post List</div>} />
@@ -49,7 +51,9 @@ describe("NewPostForm", () => {
     );
     const titleInput = screen.getByLabelText("Title:");
     const bodyInput = screen.getByLabelText("Body:");
-    const submitButton = screen.getByRole("button", "Create a new post");
+    const submitButton = screen.getByRole("button", {
+      name: /Create/i,
+    });
     const expectedTitle = "My New Post";
     const expectedBody = "This is the body of my new post.";
 
@@ -62,7 +66,6 @@ describe("NewPostForm", () => {
 
     expect(createPost).toHaveBeenCalledTimes(1);
 
-    console.log(container.innerHTML);
     await waitFor(() => {
       expect(screen.getByText("Post Detail")).toBeInTheDocument();
     });
@@ -83,7 +86,9 @@ describe("NewPostForm", () => {
     );
     const titleInput = screen.getByLabelText(/Title:/);
     const bodyInput = screen.getByLabelText("Body:");
-    const submitButton = screen.getByRole("button", "Create a new post");
+    const submitButton = screen.getByRole("button", {
+      name: /Create/i,
+    });
     const expectedTitle = "My New Post";
     const expectedBody = "This is the body of my new post.";
 
