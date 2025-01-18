@@ -62,6 +62,7 @@ describe("PostForm", () => {
     const mockPost = {
       title: "Test Title",
       body: "Test Body",
+      image: null,
     };
     const onSubmit = jest.fn();
     const { getByLabelText, getByRole } = render(
@@ -83,6 +84,7 @@ describe("PostForm", () => {
     expect(onSubmit).toHaveBeenCalledWith({
       title: "New Title",
       body: "New Body",
+      image: null,
     });
   });
 });

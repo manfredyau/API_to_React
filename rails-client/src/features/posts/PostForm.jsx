@@ -6,6 +6,7 @@ function PostForm({ post = null, onSubmit, headerText, buttonText }) {
     post || {
       title: "",
       body: "",
+      image: null,
     }
   );
 
@@ -24,6 +25,7 @@ function PostForm({ post = null, onSubmit, headerText, buttonText }) {
             type="text"
             id="titleInput"
             value={formData.title}
+            name="post[title]"
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
@@ -34,7 +36,20 @@ function PostForm({ post = null, onSubmit, headerText, buttonText }) {
           <textarea
             id="bodyInput"
             value={formData.body}
+            name="post[body]"
             onChange={(e) => setFormData({ ...formData, body: e.target.value })}
+          />
+        </div>
+        <div>
+          <label htmlFor="fileInput">image:</label>
+          <input
+            type="file"
+            id="fileInput"
+            name="post[image]"
+            accept="image/*"
+            onChange={(e) =>
+              setFormData({ ...formData, image: e.target.files[0] })
+            }
           />
         </div>
         <div>
