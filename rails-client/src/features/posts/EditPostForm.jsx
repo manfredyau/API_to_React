@@ -24,7 +24,11 @@ function EditPostForm() {
   // The postForm data will be passed by PostForm component
   async function handleEditSubmit(postForm) {
     try {
-      await updatePost(id, postForm);
+      const postFormObj = new FormData();
+      postFormObj.append("post[title]", postForm.title);
+      postFormObj.append("post[body]", postForm.body);
+      postFormObj.append("post[image]", postForm.image);
+      await updatePost(id, postFormObj);
       navigate(`/posts/${id}`);
     } catch (error) {
       console.error("An error occurred: ", error);

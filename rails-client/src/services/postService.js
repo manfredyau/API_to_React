@@ -34,10 +34,7 @@ async function fetchPost(id) {
 async function createPost(formData) {
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
+    body: formData,
   });
 
   if (!response.ok) {
@@ -50,10 +47,7 @@ async function createPost(formData) {
 async function updatePost(id, formData) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
+    body: formData,
   });
 
   if (!response.ok) {

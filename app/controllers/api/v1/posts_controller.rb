@@ -6,13 +6,21 @@ module Api
       # GET /posts
       def index
         @posts = Post.all
+        posts_with_image = @posts.map do |post|
+          post.image.attached? ? post.as_json.merge(image: url_for(post.image)) : post.as_json.merge(image: nil)
 
-        render json: @posts
+        end
+
+        render json: posts_with_image
       end
 
       # GET /posts/1
       def show
-        render json: @post
+        if @post.image.attached?
+          render json: @post.as_json.merge(image: url_for(@post.image.variant(resize_to_limit: [300, 300])))
+        else
+          render json: @post.as_json.merge(image: nil)
+        end
       end
 
       # POST /posts
@@ -49,7 +57,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def post_params
-        params.require(:post).permit(:title, :body)
+        params.require(:post).permit(:title, :body, :image)
       end
     end
   end

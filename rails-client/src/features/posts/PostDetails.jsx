@@ -12,6 +12,7 @@ function PostDetails() {
     const fetchCurrentPost = async () => {
       try {
         const json = await fetchPost(id);
+        console.log(json);
         setPost(json);
       } catch (e) {
         console.error("Error fetching post: ", e);
@@ -40,6 +41,7 @@ function PostDetails() {
         <br />
         <h2>{post.title}</h2>
         <h3>{post.body}</h3>
+        <p><img src={post.image} alt="There is no image for this post" /></p>
         <Link to={`/posts/${post.id - 1}`}>Previous Post</Link>
         {" | "}
         <Link to={`/posts/${post.id}/edit`}>Edit</Link>
