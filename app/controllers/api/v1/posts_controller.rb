@@ -7,8 +7,9 @@ module Api
       def index
         @posts = Post.all
         posts_with_image = @posts.map do |post|
-          post.image.attached? ? post.as_json.merge(image: url_for(post.image)) : post.as_json.merge(image: nil)
-
+          (post.image.attached?) ?
+            post.as_json.merge(image_url: url_for(post.image.variant(resize_to_limit: [ 100, 100 ]))) :
+            post.as_json.merge(image_url: nil)
         end
 
         render json: posts_with_image
@@ -17,9 +18,9 @@ module Api
       # GET /posts/1
       def show
         if @post.image.attached?
-          render json: @post.as_json.merge(image: url_for(@post.image.variant(resize_to_limit: [300, 300])))
+          render json: @post.as_json.merge(image_url: url_for(@post.image.variant(resize_to_limit: [ 300, 300 ])))
         else
-          render json: @post.as_json.merge(image: nil)
+          render json: @post.as_json.merge(image_url: nil)
         end
       end
 
