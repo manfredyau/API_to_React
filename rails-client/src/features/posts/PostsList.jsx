@@ -1,8 +1,17 @@
-import {useEffect, useState} from "react";
-import {fetchAllPosts, deletePost} from "../../services/postService.js";
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchAllPosts, deletePost } from "../../services/postService.js";
+import { Link } from "react-router-dom";
+import "./PostImage.css"
 
 function PostsList() {
+  // posts: {
+  //   id: number,
+  //   title: string,
+  //   body: string,
+  //   created_at: string,
+  //   updated_at: string,
+  //   image_url?: string
+  // }[]
   const [posts, setPosts] = useState([]);
   const [, setLoading] = useState(true);
   const [, setError] = useState(null);
@@ -14,7 +23,7 @@ function PostsList() {
         setPosts(data);
       } catch (e) {
         setError(e);
-        console.error("Failed to fetch posts", e)
+        console.error("Failed to fetch posts", e);
       } finally {
         setLoading(false);
       }
@@ -45,6 +54,19 @@ function PostsList() {
             <h2>
               <Link to={`/posts/${post.id}`}>{post.title}</Link>
             </h2>
+            {/*Check if the post has an image and display it if it does*/}
+            {/*{post.image_url ? (*/}
+            {/*  <p>*/}
+            {/*    <img src={post.image_url} alt="Post Image" className={"post-image"}/>*/}
+            {/*  </p>*/}
+            {/*) : null}*/}
+            {post.image_url && (
+              <img
+                src={post.image_url}
+                alt="Post Image"
+                className={"post-image"}
+              />
+            )}
             <p>Published at: {formatDate(post.created_at)}</p>
             <div>
               <button onClick={() => deletePostHandler(post.id)}>Delete</button>
