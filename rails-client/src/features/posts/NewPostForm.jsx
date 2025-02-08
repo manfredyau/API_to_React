@@ -8,7 +8,7 @@ export default function NewPostForm() {
   const handleCreateSubmit = async (formData) => {
     // In fact, formData is not a FormData object, it's just an object with key-value pairs
     // So we need to convert it to a FormData object
-    const formDataObj = objectToFormData(formData);
+    const formDataObj = objectToFormData({post: formData});
 
     try {
       const response = await createPost(formDataObj);
