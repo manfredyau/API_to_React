@@ -15,7 +15,7 @@ function appendAsDate(formData, formKey, value) {
 }
 
 function isObjectButNotFile(value) {
-  return typeof value === 'object' && !(value instanceof File);
+  return typeof value === "object" && !(value instanceof File);
 }
 
 function appendToFormData(formData, formKey, value) {
