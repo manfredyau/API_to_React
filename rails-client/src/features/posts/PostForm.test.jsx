@@ -87,4 +87,21 @@ describe("PostForm", () => {
       image: null,
     });
   });
+
+  it("handle image upload", async () => {
+    const mockSubmit = jest.fn();
+    const consoleSpy = jest.spyOn(console, "log");
+    consoleSpy.mockImplementation(() => {});
+    const { getByLabelText } = render(
+      <PostForm
+        buttonText={"Create Post"}
+        headerText={"Create a new post"}
+        onSubmit={mockSubmit}
+      />
+    );
+    const fileInput = getByLabelText(/image/i);
+    const file = new File(["(⌐□_□)"], "test.png", { type: "image/png" });
+    fireEvent.change(fileInput, { target: { files: [file] } });
+    expect(consoleSpy).toHaveBeenCalledWith(file);
+  });
 });
