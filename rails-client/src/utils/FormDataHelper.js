@@ -28,6 +28,9 @@ function appendToFormData(formData, formKey, value) {
   }
 }
 
+/** if you want to pass a post, the correct usage is to pass {post: {title: "foo", content: "bar"}}
+ * @param obj The object that needs to be converted.
+ * @param namespace If you pass this parameter, it will generate formKeys like namespace[propertyName], or just the propertyName if not given.*/
 export function objectToFormData(
   obj,
   namespace = null,

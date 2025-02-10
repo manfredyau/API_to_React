@@ -4,6 +4,7 @@ import EditPostForm from "./EditPostForm.jsx";
 import { fetchPost, updatePost } from "../../services/postService.js";
 import { act } from "react";
 import { afterEach, beforeEach, describe, expect, it } from "@jest/globals";
+import { objectToFormData } from "../../utils/FormDataHelper.js";
 
 jest.mock("../../services/postService", () => ({
   fetchPost: jest.fn(),
@@ -66,6 +67,8 @@ describe("EditPostForm", () => {
       body: "A new post body",
     };
 
+    const formData = objectToFormData({ post: newPost });
+
     await act(async () => {
       fireEvent.change(titleInput, { target: { value: newPost.title } });
       fireEvent.change(bodyInput, { target: { value: newPost.body } });
@@ -73,6 +76,7 @@ describe("EditPostForm", () => {
     });
 
     expect(updatePost).toHaveBeenCalledTimes(1);
+    expect(updatePost).toHaveBeenCalledWith("1", formData);
     expect(screen.getByText("Post Detail")).toBeInTheDocument();
   });
 
