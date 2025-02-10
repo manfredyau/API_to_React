@@ -28,10 +28,10 @@ development:
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  username: postgres
+  username: <%= ENV['DATABASE_USERNAME'] %>
 
   # The password associated with the PostgreSQL role (username).
-  password: FSqwk123
+  password: <%= ENV['DATABASE_PASSWORD'] %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -57,8 +57,8 @@ development:
 test:
   <<: *default
   database: API to React Test
-  username: postgres
-  password: FSqwk123
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   port: 5432
 
 # As with config/credentials.yml, you never want to store sensitive information,
