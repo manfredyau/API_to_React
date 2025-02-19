@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { fetchAllPosts, deletePost } from "../../services/postService.js";
+import { deletePost } from "../../services/postService.js";
 import { Link } from "react-router-dom";
-import "./PostImage.css"
+import SearchBar from "./SearchBar.jsx";
+import "./PostImage.css";
+import useURLSearchParam from "../../hooks/useURLSearchParam.js";
+import usePostsData from "../../hooks/usePostsData.js";
 
 function PostsList() {
   // posts: {
@@ -13,25 +16,22 @@ function PostsList() {
   //   image_url?: string
   // }[]
   const [posts, setPosts] = useState([]);
-  const [, setLoading] = useState(true);
-  const [, setError] = useState(null);
+  // Calling setSearchTerm will not trigger data fetching, but only update the SearchBar value
+  const [searchTerm, setSearchTerm] = useState("");
+  // Calling setDebouncedSearchTerm will update the URL and trigger data fetching
+  const [debouncedSearchTerm, setDebouncedSearchTerm] =
+    useURLSearchParam("search");
+  const {
+    posts: fetchedPosts,
+    loading,
+    error,
+  } = usePostsData(debouncedSearchTerm);
+
   // Fetch posts from the API
   useEffect(() => {
-    async function loadPosts() {
-      try {
-        const data = await fetchAllPosts();
-        setPosts(data);
-      } catch (e) {
-        setError(e);
-        console.error("Failed to fetch posts", e);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadPosts();
-  }, []);
-
+    if (fetchedPosts) setPosts(fetchedPosts);
+  }, [fetchedPosts]);
+  console.log("test");
   function formatDate(date) {
     date = new Date(date);
     return date.toLocaleString();
@@ -46,8 +46,23 @@ function PostsList() {
     }
   };
 
+  function handleImmediateSearchChange(searchValue) {
+    setSearchTerm(searchValue);
+  }
+
+  function handleDebouncedSearchChange(searchValue) {
+    setDebouncedSearchTerm(searchValue);
+  }
+
   return (
     <div>
+      <SearchBar
+        value={searchTerm}
+        onSearchChange={handleDebouncedSearchChange}
+        onImmediateChange={handleImmediateSearchChange}
+      />
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
       {posts.map((post) => {
         return (
           <div key={post.id} className="post-container">

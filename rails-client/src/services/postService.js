@@ -1,7 +1,16 @@
-import { API_URL } from "../constant.js";
+import { POSTS_API_URL } from "../constant.js";
+import { SEARCH_API_URL } from "../constant.js";
 
 async function fetchAllPosts() {
-  const response = await fetch(`${API_URL}`);
+  const response = await fetch(`${POSTS_API_URL}`);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+}
+
+async function searchPosts(query) {
+  const response = await fetch(`${SEARCH_API_URL}/posts?q=${query}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
@@ -9,7 +18,7 @@ async function fetchAllPosts() {
 }
 
 async function deletePost(id) {
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${POSTS_API_URL}/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +33,7 @@ async function deletePost(id) {
 }
 
 async function fetchPost(id) {
-  const response = await fetch(`${API_URL}/${id}`);
+  const response = await fetch(`${POSTS_API_URL}/${id}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
@@ -32,7 +41,7 @@ async function fetchPost(id) {
 }
 
 async function createPost(formData) {
-  const response = await fetch(API_URL, {
+  const response = await fetch(POSTS_API_URL, {
     method: "POST",
     body: formData,
   });
@@ -45,7 +54,7 @@ async function createPost(formData) {
 }
 
 async function updatePost(id, formData) {
-  const response = await fetch(`${API_URL}/${id}`, {
+  const response = await fetch(`${POSTS_API_URL}/${id}`, {
     method: "PUT",
     body: formData,
   });
@@ -57,4 +66,11 @@ async function updatePost(id, formData) {
   return response.json();
 }
 
-export { fetchAllPosts, deletePost, fetchPost, createPost, updatePost };
+export {
+  fetchAllPosts,
+  searchPosts,
+  deletePost,
+  fetchPost,
+  createPost,
+  updatePost,
+};
