@@ -6,7 +6,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import * as postsService from "../../services/postService.js";
 
 jest.mock("../../constant.js", () => ({
-  API_URL: "http://your-test-api-url",
+  POSTS_API_URL: "http://your-test-api-url",
 }));
 
 jest.mock("../../services/postService.js", () => ({

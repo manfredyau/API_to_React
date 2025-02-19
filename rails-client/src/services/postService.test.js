@@ -12,7 +12,7 @@ import {
 import { afterAll, beforeEach, describe, expect, it } from "@jest/globals";
 
 jest.mock("../constant.js", () => ({
-  API_URL: "http://your-test-api-url.com",
+  POSTS_API_URL: "http://your-test-api-url.com",
 }));
 
 describe("Post API service", () => {
