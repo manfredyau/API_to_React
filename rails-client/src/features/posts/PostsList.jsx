@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { deletePost } from "../../services/postService.js";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import SearchBar from "./SearchBar.jsx";
 import "./PostImage.css";
 import useURLSearchParam from "../../hooks/useURLSearchParam.js";
 import usePostsData from "../../hooks/usePostsData.js";
+import Pagination from "./Pagination.jsx";
 
 function PostsList() {
   // posts: {
@@ -21,17 +22,28 @@ function PostsList() {
   // Calling setDebouncedSearchTerm will update the URL and trigger data fetching
   const [debouncedSearchTerm, setDebouncedSearchTerm] =
     useURLSearchParam("search");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPageFromURL = parseInt(searchParams.get("page") || "1");
+  const [currentPage, setCurrentPage] = useState(initialPageFromURL);
   const {
     posts: fetchedPosts,
     loading,
     error,
-  } = usePostsData(debouncedSearchTerm);
+    totalPosts,
+    perPage: postsPerPage,
+  } = usePostsData(debouncedSearchTerm, currentPage);
+
+  useEffect(() => {
+    const searchTermFromURL = searchParams.get("search") || "";
+    setSearchTerm(searchTermFromURL);
+  }, [searchParams]);
 
   // Fetch posts from the API
   useEffect(() => {
     if (fetchedPosts) setPosts(fetchedPosts);
   }, [fetchedPosts]);
   console.log("test");
+
   function formatDate(date) {
     date = new Date(date);
     return date.toLocaleString();
@@ -40,7 +52,7 @@ function PostsList() {
   const deletePostHandler = async (id) => {
     try {
       await deletePost(id);
-      setPosts(posts.filter((post) => post.id !== id));
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     } catch (e) {
       console.error("An error occurred while deleting post: ", e);
     }
@@ -51,7 +63,16 @@ function PostsList() {
   }
 
   function handleDebouncedSearchChange(searchValue) {
+    setCurrentPage(1);
+
+    // Do not set page as currentPage, as state updates are asynchronous and will not reflect immediately.
+    setSearchParams({ search: searchValue, page: "1" });
     setDebouncedSearchTerm(searchValue);
+  }
+
+  function handlePageChange(page) {
+    setCurrentPage(page);
+    setSearchParams({ search: debouncedSearchTerm, page: page });
   }
 
   return (
@@ -60,6 +81,13 @@ function PostsList() {
         value={searchTerm}
         onSearchChange={handleDebouncedSearchChange}
         onImmediateChange={handleImmediateSearchChange}
+      />
+
+      <Pagination
+        currentPage={currentPage}
+        totalPosts={totalPosts}
+        postsPerPage={postsPerPage}
+        onPageChange={handlePageChange}
       />
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}

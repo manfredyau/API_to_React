@@ -1,16 +1,18 @@
 import { POSTS_API_URL } from "../constant.js";
 import { SEARCH_API_URL } from "../constant.js";
 
-async function fetchAllPosts() {
-  const response = await fetch(`${POSTS_API_URL}`);
+async function fetchAllPosts(page = 1) {
+  const response = await fetch(`${POSTS_API_URL}?page=${page}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
   return response.json();
 }
 
-async function searchPosts(query) {
-  const response = await fetch(`${SEARCH_API_URL}/posts?q=${query}`);
+async function searchPosts(query, page = 1) {
+  const response = await fetch(
+    `${SEARCH_API_URL}/posts?q=${query}&page=${page}`
+  );
   if (!response.ok) {
     throw new Error(response.statusText);
   }

@@ -1,7 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import PropTypes from "prop-types";
 
-export default function SearchBar({ value, onSearchChange, onImmediateChange }) {
+export default function SearchBar({
+  value,
+  onSearchChange,
+  onImmediateChange,
+}) {
   const searchDebounceRef = useRef(null);
 
   function handleSearchChange(e) {
