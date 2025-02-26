@@ -1,4 +1,4 @@
-const prettier = require('prettier')
+const prettier = require("prettier");
 import PostsList from "./PostsList";
 import { afterEach, beforeEach, describe, expect, it } from "@jest/globals";
 import { MemoryRouter } from "react-router-dom";
@@ -17,18 +17,20 @@ jest.mock("../../services/postService.js", () => ({
 global.console.error = jest.fn();
 
 describe("PostsList component", () => {
-  const mockedPosts = [
-    {
-      id: 1,
-      title: "Post 1",
-      body: "Content 1",
-    },
-    {
-      id: 2,
-      title: "Post 2",
-      body: "Content 2",
-    },
-  ];
+  const mockedPosts = {
+    posts: [
+      {
+        id: 1,
+        title: "Post 1",
+        body: "Content 1",
+      },
+      {
+        id: 2,
+        title: "Post 2",
+        body: "Content 2",
+      },
+    ],
+  };
 
   beforeEach(() => {
     postsService.fetchAllPosts.mockResolvedValue(mockedPosts);
