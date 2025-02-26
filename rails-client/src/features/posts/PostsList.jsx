@@ -44,10 +44,6 @@ function PostsList() {
   }, [fetchedPosts]);
   console.log("test");
 
-  useEffect(() => {
-    console.log(`useEffect currentPage: ${currentPage}`);
-  }, [currentPage]);
-
   function formatDate(date) {
     date = new Date(date);
     return date.toLocaleString();
