@@ -42,7 +42,8 @@ function PostsList() {
   useEffect(() => {
     if (fetchedPosts) setPosts(fetchedPosts);
   }, [fetchedPosts]);
-  console.log("test");
+
+  console.log("Rendering PostsList")
 
   function formatDate(date) {
     date = new Date(date);
@@ -89,8 +90,8 @@ function PostsList() {
         postsPerPage={postsPerPage}
         onPageChange={handlePageChange}
       />
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
+      {loading && <h1>Loading...</h1>}
+      {error && <h1 color="red">Error: {error.message}</h1>}
       {posts.map((post) => {
         return (
           <div key={post.id} className="post-container">

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export default function usePostsData(searchTerm, page = 1) {
   const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalPosts, setTotalPosts] = useState(0);
   const [perPage, setPerPage] = useState(10);
@@ -23,16 +23,16 @@ export default function usePostsData(searchTerm, page = 1) {
           setTotalPosts(data.total_count);
           setPerPage(data.per_page);
         }
-        setIsLoading(false);
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch posts", error);
         setError(error);
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     fetchPosts();
   }, [page, searchTerm]);
-  return { posts, isLoading, error, totalPosts, perPage, page };
+  return { posts, loading, error, totalPosts, perPage, page };
 }
 
 usePostsData.propTypes = {
