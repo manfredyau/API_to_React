@@ -11,7 +11,7 @@ async function fetchAllPosts(page = 1) {
 
 async function searchPosts(query, page = 1) {
   const response = await fetch(
-    `${SEARCH_API_URL}/posts?q=${query}&page=${page}`
+    `${SEARCH_API_URL}?q=${query}&page=${page}`
   );
   if (!response.ok) {
     throw new Error(response.statusText);
